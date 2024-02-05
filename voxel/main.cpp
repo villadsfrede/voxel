@@ -1,5 +1,6 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
 #include <iostream>
 
 // Vertex Shader source code
@@ -18,9 +19,10 @@ const char* fragmentShaderSource = "#version 330 core\n"
 "   FragColor = vec4(0.8f, 0.3f, 0.02f, 1.0f);\n"
 "}\n\0";
 
-
 int main()
 {
+	glm::vec4 vec(0.1f, 0.1f, 0.1f, 0.1f);
+
 	if (!glfwInit())
 		return -1;
 
