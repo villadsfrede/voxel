@@ -60,7 +60,7 @@ int main()
 	VBO VBO(vertices, sizeof(vertices));
 	EBO EBO(indices, sizeof(indices));
 
-	VAO.Link(VBO, 1);
+	VAO.Link(VBO, 0);
 
 	VAO.Unbind();
 	VBO.Unbind();
