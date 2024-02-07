@@ -33,9 +33,7 @@ public:
 		glUseProgram(ID);
 	}
 
-	~Shader() {
-		glDeleteShader(ID);
-	}
+	void Delete();
 };
 
 Shader::Shader(const char* vertexFile, const char* fragmentFile) {
@@ -65,6 +63,10 @@ Shader::Shader(const char* vertexFile, const char* fragmentFile) {
 
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
+}
+
+void Shader::Delete() {
+	glDeleteShader(ID);
 }
 
 #endif
