@@ -10,26 +10,44 @@
 
 #include "shader.h"
 
+#include "camera.h"
+
 const unsigned int width = 1000;
 const unsigned int height = 1000;
 
 GLfloat vertices[] =
-{ //     COORDINATES
-	-0.5f, 0.0f,  0.5f,
-	-0.5f, 0.0f, -0.5f,
-	 0.5f, 0.0f, -0.5f,
-	 0.5f, 0.0f,  0.5f,
-	 0.0f, 0.8f,  0.0f,
+{//     COORDINATES
+	// BOTTOM
+	-1.0f, -1.0f, -1.0f, //0
+	1.0f, -1.0f, -1.0f,
+	1.0f, 1.0f, -1.0f,
+	-1.0f, 1.0f, -1.0f,
+	// TOP
+	-1.0f, -1.0f, 1.0f, //4
+	1.0f, -1.0f, 1.0f,
+	1.0f, 1.0f, 1.0f,
+	-1.0f, 1.0f, 1.0f,
 };
 
 GLuint indices[] =
 {
-	0, 1, 2,
+	0, 5, 4,
+	0, 5, 1,
+
+	4, 6, 7,
+	4, 6, 5,
+
+	7, 2, 3,
+	7, 2, 6,
+
 	0, 2, 3,
-	0, 1, 4,
-	1, 2, 4,
-	2, 3, 4,
-	3, 0, 4
+	0, 2, 1,
+
+	3, 4, 7,
+	3, 4, 0,
+
+	2, 5, 1,
+	2, 5, 6,
 };
 
 int main()
@@ -72,11 +90,9 @@ int main()
 	VBO.Unbind();
 	EBO.Unbind();
 
-	// ROTATION OF OBJECT
-	float rotation = 0.0f;
-	double prevTime = glfwGetTime();
-
 	glEnable(GL_DEPTH_TEST);
+
+	Camera camera(width, height, glm::vec3(0.0f, 0.0f, 0.0f));
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -86,29 +102,9 @@ int main()
 
 		shaderProgram();
 
-		// Simple timer
-		double crntTime = glfwGetTime();
-		if (crntTime - prevTime >= 1 / 60)
-		{
-			rotation += 0.5f;
-			prevTime = crntTime;
-		}
+		camera.Input(window);
 
-		// INIT MATRIX
-		glm::mat4 model = glm::mat4(1.0f);
-		glm::mat4 view = glm::mat4(1.0f);
-		glm::mat4 proj = glm::mat4(1.0f);
-
-		model = glm::rotate(model, glm::radians(rotation), glm::vec3(0.0f, 1.0f, 0.0f));
-		view = glm::translate(view, glm::vec3(0.0f, -0.5f, -2.0f));
-		proj = glm::perspective(glm::radians(45.0f), (float)width / height, 0.1f, 100.0f);
-
-		int modelLoc = glGetUniformLocation(shaderProgram.ID, "model");
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		int viewLoc = glGetUniformLocation(shaderProgram.ID, "view");
-		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
-		int projLoc = glGetUniformLocation(shaderProgram.ID, "proj");
-		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(proj));
+		camera.Matrix(45.0f, 0.1f, 100.0f, shaderProgram, "cameramatrix");
 
 		VAO.Bind();
 
