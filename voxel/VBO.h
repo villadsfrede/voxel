@@ -1,23 +1,25 @@
 #ifndef VBO_H
 #define VBO_H
 
+#include <vector>
+
 #include <glad/glad.h>
 
 class VBO {
 public:
 	GLuint ID;
 
-	VBO(GLfloat* vertices, GLsizeiptr size);
+	VBO(std::vector<GLint>* vertices);
 
 	void Bind();
 	void Unbind();
 	void Delete();
 };
 
-VBO::VBO(GLfloat* vertices, GLsizeiptr size) {
+VBO::VBO(std::vector<GLint>* vertices) {
 	glGenBuffers(1, &ID);
 	glBindBuffer(GL_ARRAY_BUFFER, ID);
-	glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, vertices->size() * sizeof(GLint), &vertices->front(), GL_STATIC_DRAW);
 }
 
 void VBO::Bind() {

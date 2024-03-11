@@ -8,22 +8,9 @@
 class Chunk {
 public:
 	glm::vec3 position;
+	int size;
 
-	Voxel voxels[16][16][16];
-
-	Chunk(glm::vec3 position);
+	int data[16 * 16 * 16] = { 0 };
 };
-
-Chunk::Chunk(glm::vec3 position) {
-	Chunk::position = position;
-
-	for (int x = 0; x < 16; x++) {
-		for (int y = 0; y < 16; y++) {
-			for (int z = 0; z < 16; z++) {
-				voxels[x][y][z] = Voxel(Chunk::position + glm::vec3(x, y, z));
-			}
-		}
-	}
-}
 
 #endif

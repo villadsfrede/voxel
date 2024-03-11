@@ -1,0 +1,38 @@
+#include <iostream>
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
+#include "view.h"
+
+bool View::init() {
+	if (!glfwInit())
+		return false;
+
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+	window = glfwCreateWindow(width, height, "voxel", NULL, NULL);
+
+	if (!window) {
+		std::cout << "Failed to create window" << std::endl;
+		glfwTerminate();
+		return false;
+	}
+
+	glfwMakeContextCurrent(window);
+
+	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+	{
+		std::cout << "Failed to load opengl function pointers" << std::endl;
+		glfwTerminate();
+		return false;
+	}
+
+	return true;
+}
+
+void View::cleanup() {
+	glfwDestroyWindow(window);
+	glfwTerminate();
+}
