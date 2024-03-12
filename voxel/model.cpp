@@ -1,3 +1,4 @@
+#include <iostream>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include "model.h"
@@ -33,19 +34,24 @@ void Model::render() {
 	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 }
 
-void Model::fromChunkGreedy(Chunk chunk) {
+
+void Model::march(Chunk chunk) {
 	positions.clear();
 	indices.clear();
 
-	for (int d = 0; d < 3; d++) {
-		int i, j, k, l, w, h;
-		int u = (d + 1) % 3;
-		int v = (d + 2) % 3;
-		int x[3];
-		int q[3];
+	for (int x = 0; x < chunk.size; x++) {
+		for (int y = 0; y < chunk.size; y++) {
+			for (int z = 0; z < chunk.size; z++) {
+				positions.push_back(x);
+				positions.push_back(y);
+				positions.push_back(z);
 
-		bool mask[16 * 16];
-
-
+				indices.push_back(positions.size() + 0);
+				indices.push_back(positions.size() + 1);
+				indices.push_back(positions.size() + 2);
+			}
+		}
 	}
+	std::cout << "POSITIONS " << positions.size() << std::endl;
+	std::cout << "INDICES " << indices.size() << std::endl;
 }

@@ -14,8 +14,8 @@ public:
 	GLuint vbo, vao, ibo;
 	
 	void setup();
+	void march(Chunk chunk);
 	void cleanup();
-	void fromChunkGreedy(Chunk chunk);
 	void render();
 };
 

@@ -36,3 +36,16 @@ void View::cleanup() {
 	glfwDestroyWindow(window);
 	glfwTerminate();
 }
+
+void View::loadChunkModels(World &world) {
+	std::cout << world.chunks.size() << std::endl;
+	for (unsigned int i = 0; i < world.chunks.size(); i++) {
+		Model model;
+		model.march(world.chunks[i]);
+		model.setup();
+		models.push_back(model);
+	}
+}
+
+void View::render(World &world) {
+}

@@ -11,7 +11,7 @@ public:
 
 	int chunkSize = 16;
 
-	glm::vec3 dim = glm::vec3(2, 2, 2);
+	glm::vec3 dim = glm::vec3(3, 3, 3);
 
 	void blank();
 	void generate();

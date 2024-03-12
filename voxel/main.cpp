@@ -1,3 +1,4 @@
+#include <iostream>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
@@ -5,10 +6,6 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "view.h"
-
-#include "EBO.h"
-#include "VAO.h"
-#include "VBO.h"
 
 #include "World.h"
 
@@ -18,27 +15,16 @@
 
 int main()
 {
+	std::cout << "GENERATING WORLD" << std::endl;
+	World world;
+	world.blank();
+
+	std::cout << "LOADING OPENGL" << std::endl;
 	View view;
 	view.init();
+	view.loadChunkModels(world);
 
 	Shader shaderProgram("default.vert", "default.frag");
-
-	//World world;
-	//world.Mesh();
-
-	/*
-	VAO VAO;
-	VAO.Bind();
-
-	VBO VBO(&world.vertices);
-	EBO EBO(&world.indices);
-
-	VAO.Link(VBO, 0);
-
-	VAO.Unbind();
-	VBO.Unbind();
-	EBO.Unbind();
-	*/
 
 	Camera camera(view.width, view.height, glm::vec3(0.0f, 0.0f, 0.0f));
 
@@ -54,9 +40,11 @@ int main()
 
 		camera.Matrix(45.0f, 0.1f, 100.0f, shaderProgram, "cameramatrix");
 
-		//VAO.Bind();
-
 		//glDrawElements(GL_TRIANGLES, sizeof(indices)/sizeof(int), GL_UNSIGNED_INT, 0);
+
+		for (int i = 0; i < view.models.size(); i++) {
+			view.models[i].render();
+		}
 
 		glfwSwapBuffers(view.window);
 
@@ -64,12 +52,6 @@ int main()
 	}
 
 	shaderProgram.Delete();
-
-	/*
-	VAO.Delete();
-	VBO.Delete();
-	EBO.Delete();
-	*/
 
 	return 0;
 }

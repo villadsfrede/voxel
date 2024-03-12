@@ -1,6 +1,7 @@
 #ifndef VIEW_H
 #define VIEW_H
 
+#include "model.h"
 #include "world.h"
 
 class View {
@@ -10,7 +11,10 @@ public:
 
 	GLFWwindow* window;
 
+	std::vector<Model> models;
+
 	bool init();
+	void loadChunkModels(World& world);
 	void cleanup();
 	void render(World &world);
 };
