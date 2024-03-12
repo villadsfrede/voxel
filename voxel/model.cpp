@@ -35,6 +35,7 @@ void Model::render() {
 }
 
 
+
 void Model::march(Chunk chunk) {
 	positions.clear();
 	indices.clear();

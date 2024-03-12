@@ -6,6 +6,8 @@
 #include <GLFW/glfw3.h>
 #include "chunk.h"
 
+
+
 class Model {
 public:
 	std::vector<GLfloat> positions;
