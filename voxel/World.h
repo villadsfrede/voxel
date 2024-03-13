@@ -11,8 +11,6 @@ class World {
 public:
 	std::vector<Chunk> chunks;
 
-	int chunkSize = 16;
-
 	glm::vec3 dim = glm::vec3(1, 1, 1);
 
 	void blank();

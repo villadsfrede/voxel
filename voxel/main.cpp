@@ -43,7 +43,7 @@ int main()
 		//glDrawElements(GL_TRIANGLES, sizeof(indices)/sizeof(int), GL_UNSIGNED_INT, 0);
 
 		for (int i = 0; i < view.models.size(); i++) {
-			view.models[i].render();
+			view.models[i].renderPoint();
 		}
 
 		glfwSwapBuffers(view.window);

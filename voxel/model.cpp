@@ -21,10 +21,10 @@ void Model::setup() {
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
 	// NORMAL BUFFER
-	glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
-	glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(GLfloat), &normals[0], GL_STATIC_DRAW);
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	//glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
+	//glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(GLfloat), &normals[0], GL_STATIC_DRAW);
+	//glEnableVertexAttribArray(1);
+	//glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	
 	// INDEX BUFFER
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
@@ -60,6 +60,7 @@ static const glm::vec3 offset[8] = {
 	glm::vec3(1,1,1),
 };
 
+/*
 void Model::march(Chunk chunk) {
 	positions.clear();
 	indices.clear();
@@ -98,7 +99,23 @@ void Model::march(Chunk chunk) {
 		}
 	}
 }
+*/
 
 void Model::point(Chunk chunk) {
+	positions.clear();
+	indices.clear();
 
+	for (int x = 0; x < 4; x++) {
+		for (int y = 0; y < 4; y++) {
+			for (int z = 0; z < 4; z++) {
+				positions.push_back(x + chunk.position.x);
+				positions.push_back(y + chunk.position.y);
+				positions.push_back(z + chunk.position.z);
+
+				indices.push_back(positions.size() + 0);
+				indices.push_back(positions.size() + 1);
+				indices.push_back(positions.size() + 2);
+			}
+		}
+	}
 }
