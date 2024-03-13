@@ -53,5 +53,7 @@ int main()
 
 	shaderProgram.Delete();
 
+	view.cleanup();
+
 	return 0;
 }

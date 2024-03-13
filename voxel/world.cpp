@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 #include <glm/glm.hpp>
 
 #include "chunk.h"
@@ -15,7 +16,7 @@ void World::blank() {
 				Chunk chunk;
 				chunk.position = glm::vec3(i, j, k);
 				chunk.size = chunkSize;
-				chunk.data[i * j * k] = int(std::rand());
+				chunk.data[(i * 16 * 16) + (j * 16) + k] = 0.3;
 				chunks.push_back(chunk);
 			}
 		}

@@ -16,6 +16,9 @@
     <Filter Include="Resource Files\Shaders">
       <UniqueIdentifier>{ba18f634-6bbe-4bf1-8010-7beb430f4d31}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Tables">
+      <UniqueIdentifier>{e1ccff52-33c3-4357-8575-369f2e85a98f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -76,6 +79,12 @@
     </ClInclude>
     <ClInclude Include="model.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TriangleTable.h">
+      <Filter>Resource Files\Tables</Filter>
+    </ClInclude>
+    <ClInclude Include="EdgeTable.h">
+      <Filter>Resource Files\Tables</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
