@@ -13,10 +13,21 @@ void World::blank() {
 				Chunk chunk;
 				chunk.position = glm::vec3(i + 1, j + 1, k + 1);
 
-				for (int v = 0; v < (4 * 4 * 4); v++) {
-					chunk.data[v] = (float) rand() / RAND_MAX;
-				}
+				//for (int v = 0; v < (8 * 8 * 8); v++) {
+				//	chunk.data[v] = (float)rand() / RAND_MAX - 0.4f;
+				//}
 
+				
+				for (int x = 0; x < 8; x++) {
+					for (int y = 0; y < 8; y++) {
+						for (int z = 0; z < 8; z++) {
+							if (z == 2 || y == 4) chunk.data[z + 8 * (y + 8 * x)] = 1;
+							else chunk.data[z + 8 * (y + 8 * x)] = 0;
+							//chunk.data[z + 8 * (y + 8 * x)] = (float)rand() / RAND_MAX;
+						}
+					}
+				}
+				
 				chunks.push_back(chunk);
 			}
 		}

@@ -114,19 +114,21 @@ void Model::march(Chunk chunk) {
 
 	float iso = 0.5;
 
-	for (int x = 0; x < 3; x++) {
-		for (int y = 0; y < 3; y++) {
-			for (int z = 0; z < 3; z++) {
+	for (int x = 0; x < 7; x++) {
+		for (int y = 0; y < 7; y++) {
+			for (int z = 0; z < 7; z++) {
 				int index = 0;
 
-				if (chunk.data[(z + 0) + 4 * ((y + 0) + 4 * (x + 0))] > iso) index != (1 << 0);
-				if (chunk.data[(z + 0) + 4 * ((y + 0) + 4 * (x + 1))] > iso) index != (1 << 1);
-				if (chunk.data[(z + 0) + 4 * ((y + 1) + 4 * (x + 0))] > iso) index != (1 << 2);
-				if (chunk.data[(z + 0) + 4 * ((y + 1) + 4 * (x + 1))] > iso) index != (1 << 3);
-				if (chunk.data[(z + 1) + 4 * ((y + 0) + 4 * (x + 0))] > iso) index != (1 << 4);
-				if (chunk.data[(z + 1) + 4 * ((y + 0) + 4 * (x + 1))] > iso) index != (1 << 5);
-				if (chunk.data[(z + 1) + 4 * ((y + 1) + 4 * (x + 0))] > iso) index != (1 << 6);
-				if (chunk.data[(z + 1) + 4 * ((y + 1) + 4 * (x + 1))] > iso) index != (1 << 7);
+				if (chunk.data[(z + 0) + 8 * ((y + 0) + 8 * (x + 0))] < iso) index |= (1 << 0);
+				if (chunk.data[(z + 0) + 8 * ((y + 0) + 8 * (x + 1))] < iso) index |= (1 << 1);
+				if (chunk.data[(z + 0) + 8 * ((y + 1) + 8 * (x + 0))] < iso) index |= (1 << 2);
+				if (chunk.data[(z + 0) + 8 * ((y + 1) + 8 * (x + 1))] < iso) index |= (1 << 3);
+				if (chunk.data[(z + 1) + 8 * ((y + 0) + 8 * (x + 0))] < iso) index |= (1 << 4);
+				if (chunk.data[(z + 1) + 8 * ((y + 0) + 8 * (x + 1))] < iso) index |= (1 << 5);
+				if (chunk.data[(z + 1) + 8 * ((y + 1) + 8 * (x + 0))] < iso) index |= (1 << 6);
+				if (chunk.data[(z + 1) + 8 * ((y + 1) + 8 * (x + 1))] < iso) index |= (1 << 7);
+
+				std::cout << index << std::endl;
 
 				for (int edge : TriangleTable[index]) {
 					if (edge == -1) break;
@@ -134,26 +136,29 @@ void Model::march(Chunk chunk) {
 					int v0 = EdgeTable[edge][0];
 					int v1 = EdgeTable[edge][1];
 
-					float posx = (offset[v0][0] + offset[v1][0]) / 2;
-					float posy = (offset[v0][1] + offset[v1][1]) / 2;
-					float posz = (offset[v0][2] + offset[v1][2]) / 2;
+					float posx = (float)(offset[v0][0] + offset[v1][0]) / 2;
+					float posy = (float)(offset[v0][1] + offset[v1][1]) / 2;
+					float posz = (float)(offset[v0][2] + offset[v1][2]) / 2;
 
-					positions.push_back(posx + chunk.position.x);
-					positions.push_back(posy + chunk.position.y);
-					positions.push_back(posz + chunk.position.z);
+					positions.push_back(x + posx + chunk.position.x);
+					positions.push_back(y + posy + chunk.position.y);
+					positions.push_back(z + posz + chunk.position.z);
 
-					colors.push_back(1.0f);
-					colors.push_back(1.0f);
-					colors.push_back(1.0f);
+					colors.push_back(0.8f);
+					colors.push_back(0.4f);
+					colors.push_back(0.4f);
 					colors.push_back(1.0f);
 
-					indices.push_back(positions.size() - 3);
-					indices.push_back(positions.size() - 2);
 					indices.push_back(positions.size() - 1);
+					indices.push_back(positions.size() - 2);
+					indices.push_back(positions.size() - 3);
 				}
 			}
 		}
 	}
+	std::cout << "POSITIONS: " << positions.size() << std::endl;
+	std::cout << "COLOS: " << colors.size() << std::endl;
+	std::cout << "INDICES: " << indices.size() << std::endl;
 }
 
 void Model::point(Chunk chunk) {
@@ -161,25 +166,23 @@ void Model::point(Chunk chunk) {
 	colors.clear();
 	indices.clear();
 
-	for (int x = 0; x < 4; x++) {
-		for (int y = 0; y < 4; y++) {
-			for (int z = 0; z < 4; z++) {
+	for (int x = 0; x < 8; x++) {
+		for (int y = 0; y < 8; y++) {
+			for (int z = 0; z < 8; z++) {
 				positions.push_back(x + chunk.position.x);
 				positions.push_back(y + chunk.position.y);
 				positions.push_back(z + chunk.position.z);
 
-				float value = chunk.data[z + 4 * (y + 4 * x)];
-
-				std::cout << value << std::endl;
+				float value = chunk.data[z + 8 * (y + 8 * x)];
 
 				colors.push_back(1.0f * value);
 				colors.push_back(1.0f * value);
 				colors.push_back(1.0f * value);
 				colors.push_back(1.0f);
 				
-				indices.push_back(positions.size() - 3);
-				indices.push_back(positions.size() - 2);
 				indices.push_back(positions.size() - 1);
+				indices.push_back(positions.size() - 2);
+				indices.push_back(positions.size() - 3);
 
 				std::cout << "x: " << x << " " << "y: " << y << " " << "z: " << z << std::endl;
 			}

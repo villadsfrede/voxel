@@ -10,7 +10,7 @@ public:
 	glm::vec3 position;
 	int size;
 
-	float data[4 * 4 * 4] = { 0 };
+	float data[8 * 8 * 8] = { 0 };
 };
 
 #endif
