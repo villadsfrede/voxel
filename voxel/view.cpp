@@ -29,8 +29,11 @@ bool View::init() {
 		return false;
 	}
 
-	glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
+	//glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
+	//glEnable(GL_PROGRAM_POINT_SIZE);
 	glPointSize(10);
+
+	glEnable(GL_DEPTH_TEST);
 
 	return true;
 }
@@ -45,6 +48,7 @@ void View::loadChunkModels(World &world) {
 	for (unsigned int i = 0; i < world.chunks.size(); i++) {
 		Model model;
 		model.point(world.chunks[i]);
+		//model.march(world.chunks[i]);
 		model.setup();
 		models.push_back(model);
 	}

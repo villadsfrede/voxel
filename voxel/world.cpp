@@ -11,7 +11,12 @@ void World::blank() {
 		for (int j = 0; j < dim.y; j++) {
 			for (int k = 0; k < dim.z; k++) {
 				Chunk chunk;
-				chunk.position = glm::vec3(i, j, k);
+				chunk.position = glm::vec3(i + 1, j + 1, k + 1);
+
+				for (int v = 0; v < (4 * 4 * 4); v++) {
+					chunk.data[v] = (float) rand() / RAND_MAX;
+				}
+
 				chunks.push_back(chunk);
 			}
 		}

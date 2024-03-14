@@ -10,6 +10,7 @@ class Model {
 public:
 	std::vector<GLfloat> positions;
 	//std::vector<GLfloat> normals;
+	std::vector<GLfloat> colors;
 	std::vector<GLuint> indices;
 
 	GLuint vbo[2], vao, ibo;
