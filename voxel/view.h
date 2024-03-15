@@ -13,7 +13,10 @@ public:
 
 	std::vector<Model> models;
 
+	// init GLFW, GLAD, OPENGL
 	bool init();
+
+	// load chunks
 	void loadChunkModels(World& world);
 	void cleanup();
 	void render(World &world);

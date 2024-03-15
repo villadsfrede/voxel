@@ -55,47 +55,6 @@ void Model::renderPoint() {
 	glDrawElements(GL_POINTS, indices.size(), GL_UNSIGNED_INT, 0);
 }
 
-/*
-void Model::march(Chunk chunk) {
-	positions.clear();
-	indices.clear();
-
-	float iso = 0.5;
-
-	for (int x = 0; x < 15; x++) {
-		for (int y = 0; y < 15; y++) {
-			for (int z = 0; z < 15; z++) {
-				int index = 0;
-
-				if (chunk.data[((x + 0) * 16 * 16) + ((y + 0) * 16) + (z + 0)] > iso) index |= (1 << 0);
-				if (chunk.data[((x + 1) * 16 * 16) + ((y + 0) * 16) + (z + 0)] > iso) index |= (1 << 1);
-				if (chunk.data[((x + 0) * 16 * 16) + ((y + 1) * 16) + (z + 0)] > iso) index |= (1 << 2);
-				if (chunk.data[((x + 1) * 16 * 16) + ((y + 1) * 16) + (z + 0)] > iso) index |= (1 << 3);
-				if (chunk.data[((x + 0) * 16 * 16) + ((y + 1) * 16) + (z + 1)] > iso) index |= (1 << 4);
-				if (chunk.data[((x + 1) * 16 * 16) + ((y + 0) * 16) + (z + 1)] > iso) index |= (1 << 5);
-				if (chunk.data[((x + 0) * 16 * 16) + ((y + 1) * 16) + (z + 1)] > iso) index |= (1 << 6);
-				if (chunk.data[((x + 1) * 16 * 16) + ((y + 1) * 16) + (z + 1)] > iso) index |= (1 << 7);
-
-				for (int i = 0; TriangleTable[index][i] != -1; i++) {
-					glm::vec3 O1 = offset[EdgeTable[TriangleTable[index][i]][0]];
-					glm::vec3 O2 = offset[EdgeTable[TriangleTable[index][i]][0]];
-
-					glm::vec3 position = ((O1 + O2) * 0.5f) + chunk.position;
-
-					positions.push_back(position.x);
-					positions.push_back(position.y);
-					positions.push_back(position.z);
-
-					indices.push_back(positions.size() - 0);
-					indices.push_back(positions.size() - 1);
-					indices.push_back(positions.size() - 2);
-				}
-			}
-		}
-	}
-}
-*/
-
 int offset[8][3] = {
 	{0, 0, 0},
 	{1, 0, 0},
@@ -114,21 +73,19 @@ void Model::march(Chunk chunk) {
 
 	float iso = 0.5;
 
-	for (int x = 0; x < 7; x++) {
-		for (int y = 0; y < 7; y++) {
-			for (int z = 0; z < 7; z++) {
+	for (int x = 0; x < 15; x++) {
+		for (int y = 0; y < 15; y++) {
+			for (int z = 0; z < 15; z++) {
 				int index = 0;
 
-				if (chunk.data[(z + 0) + 8 * ((y + 0) + 8 * (x + 0))] < iso) index |= (1 << 0);
-				if (chunk.data[(z + 0) + 8 * ((y + 0) + 8 * (x + 1))] < iso) index |= (1 << 1);
-				if (chunk.data[(z + 0) + 8 * ((y + 1) + 8 * (x + 0))] < iso) index |= (1 << 2);
-				if (chunk.data[(z + 0) + 8 * ((y + 1) + 8 * (x + 1))] < iso) index |= (1 << 3);
-				if (chunk.data[(z + 1) + 8 * ((y + 0) + 8 * (x + 0))] < iso) index |= (1 << 4);
-				if (chunk.data[(z + 1) + 8 * ((y + 0) + 8 * (x + 1))] < iso) index |= (1 << 5);
-				if (chunk.data[(z + 1) + 8 * ((y + 1) + 8 * (x + 0))] < iso) index |= (1 << 6);
-				if (chunk.data[(z + 1) + 8 * ((y + 1) + 8 * (x + 1))] < iso) index |= (1 << 7);
-
-				std::cout << index << std::endl;
+				if (chunk.data[(z + 0) + 16 * ((y + 0) + 16 * (x + 0))] < iso) index |= (1 << 0);
+				if (chunk.data[(z + 0) + 16 * ((y + 0) + 16 * (x + 1))] < iso) index |= (1 << 1);
+				if (chunk.data[(z + 0) + 16 * ((y + 1) + 16 * (x + 0))] < iso) index |= (1 << 2);
+				if (chunk.data[(z + 0) + 16 * ((y + 1) + 16 * (x + 1))] < iso) index |= (1 << 3);
+				if (chunk.data[(z + 1) + 16 * ((y + 0) + 16 * (x + 0))] < iso) index |= (1 << 4);
+				if (chunk.data[(z + 1) + 16 * ((y + 0) + 16 * (x + 1))] < iso) index |= (1 << 5);
+				if (chunk.data[(z + 1) + 16 * ((y + 1) + 16 * (x + 0))] < iso) index |= (1 << 6);
+				if (chunk.data[(z + 1) + 16 * ((y + 1) + 16 * (x + 1))] < iso) index |= (1 << 7);
 
 				for (int edge : TriangleTable[index]) {
 					if (edge == -1) break;
@@ -166,14 +123,14 @@ void Model::point(Chunk chunk) {
 	colors.clear();
 	indices.clear();
 
-	for (int x = 0; x < 8; x++) {
-		for (int y = 0; y < 8; y++) {
-			for (int z = 0; z < 8; z++) {
+	for (int x = 0; x < 16; x++) {
+		for (int y = 0; y < 16; y++) {
+			for (int z = 0; z < 16; z++) {
 				positions.push_back(x + chunk.position.x);
 				positions.push_back(y + chunk.position.y);
 				positions.push_back(z + chunk.position.z);
 
-				float value = chunk.data[z + 8 * (y + 8 * x)];
+				float value = chunk.data[z + 16 * (y + 16 * x)];
 
 				colors.push_back(1.0f * value);
 				colors.push_back(1.0f * value);
@@ -183,8 +140,6 @@ void Model::point(Chunk chunk) {
 				indices.push_back(positions.size() - 1);
 				indices.push_back(positions.size() - 2);
 				indices.push_back(positions.size() - 3);
-
-				std::cout << "x: " << x << " " << "y: " << y << " " << "z: " << z << std::endl;
 			}
 		}
 	}
