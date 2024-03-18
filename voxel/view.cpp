@@ -52,11 +52,10 @@ void View::loadChunkModels(World &world) {
 		model.setup();
 		models.push_back(model);
 	}
-
-	Model model;
-	model.point(world.chunks[0]);
-	model.setup();
-	models.push_back(model);
+	//Model model;
+	//model.point(world.chunks[0]);
+	//model.setup();
+	//models.push_back(model);
 }
 
 void View::render(World &world) {

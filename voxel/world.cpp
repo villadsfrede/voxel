@@ -2,6 +2,8 @@
 #include <cmath>
 #include <glm/glm.hpp>
 
+#include "noise.h"
+
 #include "chunk.h"
 #include "world.h"
 
@@ -11,23 +13,17 @@ void World::blank() {
 		for (int j = 0; j < dim.y; j++) {
 			for (int k = 0; k < dim.z; k++) {
 				Chunk chunk;
-				chunk.position = glm::vec3(16 * i, 16 * j, 16 * k);
+				chunk.position = glm::vec3(16 * i, 0, 16 * k);
 
-				//for (int v = 0; v < (8 * 8 * 8); v++) {
-				//	chunk.data[v] = (float)rand() / RAND_MAX - 0.4f;
-				//}
+				for (int x = 0; x < 17; x++) {
+					for (int z = 0; z < 17; z++) {
+						int height = 50 + (int)(50 * perlin(x + (16 * i), z + (16 * k)));
 
-				
-				for (int x = 0; x < 16; x++) {
-					for (int y = 0; y < 16; y++) {
-						for (int z = 0; z < 16; z++) {
-							if (z == 2 || y == 4) chunk.data[z + 16 * (y + 16 * x)] = 1;
-							else chunk.data[z + 16 * (y + 16 * x)] = 0;
-							//chunk.data[z + 8 * (y + 8 * x)] = (float)rand() / RAND_MAX;
+						for (int y = 0; y < height; y++) {
+							chunk.data[z + 17 * (y + 100 * x)] = 1;
 						}
 					}
 				}
-				
 				chunks.push_back(chunk);
 			}
 		}

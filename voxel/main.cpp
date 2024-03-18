@@ -38,17 +38,17 @@ int main()
 
 		camera.Input(view.window);
 
-		camera.Matrix(45.0f, 0.1f, 100.0f, shaderProgram, "cameramatrix");
+		camera.Matrix(45.0f, 0.1f, 1000.0f, shaderProgram, "cameramatrix");
 
 		//glDrawElements(GL_TRIANGLES, sizeof(indices)/sizeof(int), GL_UNSIGNED_INT, 0);
 
-		//for (int i = 0; i < view.models.size(); i++) {
-		//	view.models[i].renderPoint();
-		//	//view.models[i].renderChunk();
-		//}
+		for (int i = 0; i < view.models.size(); i++) {
+			//view.models[i].renderPoint();
+			view.models[i].renderChunk();
+		}
 
-		view.models[0].renderChunk();
-		view.models[1].renderPoint();
+		//view.models[0].renderChunk();
+		//view.models[1].renderPoint();
 
 		glfwSwapBuffers(view.window);
 

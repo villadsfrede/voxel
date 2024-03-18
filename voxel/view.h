@@ -6,7 +6,7 @@
 
 class View {
 public:
-	const unsigned int width = 1000;
+	const unsigned int width = 1600;
 	const unsigned int height = 1000;
 
 	GLFWwindow* window;

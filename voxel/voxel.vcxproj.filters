@@ -86,6 +86,9 @@
     <ClInclude Include="EdgeTable.h">
       <Filter>Resource Files\Tables</Filter>
     </ClInclude>
+    <ClInclude Include="noise.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="default.vert">

@@ -73,19 +73,19 @@ void Model::march(Chunk chunk) {
 
 	float iso = 0.5;
 
-	for (int x = 0; x < 15; x++) {
-		for (int y = 0; y < 15; y++) {
-			for (int z = 0; z < 15; z++) {
+	for (int x = 0; x < 16; x++) {
+		for (int y = 0; y < 99; y++) {
+			for (int z = 0; z < 16; z++) {
 				int index = 0;
 
-				if (chunk.data[(z + 0) + 16 * ((y + 0) + 16 * (x + 0))] < iso) index |= (1 << 0);
-				if (chunk.data[(z + 0) + 16 * ((y + 0) + 16 * (x + 1))] < iso) index |= (1 << 1);
-				if (chunk.data[(z + 0) + 16 * ((y + 1) + 16 * (x + 0))] < iso) index |= (1 << 2);
-				if (chunk.data[(z + 0) + 16 * ((y + 1) + 16 * (x + 1))] < iso) index |= (1 << 3);
-				if (chunk.data[(z + 1) + 16 * ((y + 0) + 16 * (x + 0))] < iso) index |= (1 << 4);
-				if (chunk.data[(z + 1) + 16 * ((y + 0) + 16 * (x + 1))] < iso) index |= (1 << 5);
-				if (chunk.data[(z + 1) + 16 * ((y + 1) + 16 * (x + 0))] < iso) index |= (1 << 6);
-				if (chunk.data[(z + 1) + 16 * ((y + 1) + 16 * (x + 1))] < iso) index |= (1 << 7);
+				if (chunk.data[(z + 0) + 17 * ((y + 0) + 100 * (x + 0))] < iso) index |= (1 << 0);
+				if (chunk.data[(z + 0) + 17 * ((y + 0) + 100 * (x + 1))] < iso) index |= (1 << 1);
+				if (chunk.data[(z + 0) + 17 * ((y + 1) + 100 * (x + 0))] < iso) index |= (1 << 2);
+				if (chunk.data[(z + 0) + 17 * ((y + 1) + 100 * (x + 1))] < iso) index |= (1 << 3);
+				if (chunk.data[(z + 1) + 17 * ((y + 0) + 100 * (x + 0))] < iso) index |= (1 << 4);
+				if (chunk.data[(z + 1) + 17 * ((y + 0) + 100 * (x + 1))] < iso) index |= (1 << 5);
+				if (chunk.data[(z + 1) + 17 * ((y + 1) + 100 * (x + 0))] < iso) index |= (1 << 6);
+				if (chunk.data[(z + 1) + 17 * ((y + 1) + 100 * (x + 1))] < iso) index |= (1 << 7);
 
 				for (int edge : TriangleTable[index]) {
 					if (edge == -1) break;
@@ -101,9 +101,11 @@ void Model::march(Chunk chunk) {
 					positions.push_back(y + posy + chunk.position.y);
 					positions.push_back(z + posz + chunk.position.z);
 
-					colors.push_back(0.8f);
-					colors.push_back(0.4f);
-					colors.push_back(0.4f);
+					float c = (float)rand() / (RAND_MAX);
+
+					colors.push_back(c);
+					colors.push_back(0.5f);
+					colors.push_back(0.5f);
 					colors.push_back(1.0f);
 
 					indices.push_back(positions.size() - 1);
@@ -113,9 +115,6 @@ void Model::march(Chunk chunk) {
 			}
 		}
 	}
-	std::cout << "POSITIONS: " << positions.size() << std::endl;
-	std::cout << "COLOS: " << colors.size() << std::endl;
-	std::cout << "INDICES: " << indices.size() << std::endl;
 }
 
 void Model::point(Chunk chunk) {
@@ -124,13 +123,13 @@ void Model::point(Chunk chunk) {
 	indices.clear();
 
 	for (int x = 0; x < 16; x++) {
-		for (int y = 0; y < 16; y++) {
+		for (int y = 0; y < 100; y++) {
 			for (int z = 0; z < 16; z++) {
 				positions.push_back(x + chunk.position.x);
 				positions.push_back(y + chunk.position.y);
 				positions.push_back(z + chunk.position.z);
 
-				float value = chunk.data[z + 16 * (y + 16 * x)];
+				float value = chunk.data[z + 16 * (y + 100 * x)];
 
 				colors.push_back(1.0f * value);
 				colors.push_back(1.0f * value);
